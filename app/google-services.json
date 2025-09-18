@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "663720319904",
+    "project_id": "app-musica-y-letras",
+    "storage_bucket": "app-musica-y-letras.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663720319904:android:9a70541b4d97d3276262c5",
+        "android_client_info": {
+          "package_name": "com.example.appmusicayletras"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApsGtIp-jVr96hsr35nKbknSiQK6cj_FQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

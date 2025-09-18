@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/Item_Inicio"
+        android:title="@string/Item_Inicio"
+        android:icon="@drawable/ic_inicio"/>
+
+    <item android:id="@+id/Item_Mi_musica"
+        android:title="@string/Item_Mi_musica"
+        android:icon="@drawable/ic_mi_musica"/>
+
+    <item android:id="@+id/Item_buscar"
+        android:title="@string/Item_buscar"
+        android:icon="@drawable/ic_buscar"/>
+
+    <item android:id="@+id/Item_perfil"
+        android:title="@string/Item_perfil"
+        android:icon="@drawable/ic_perfil"/>
+
+</menu>
