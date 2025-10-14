@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firebaseAuth = FirebaseAuth.getInstance()
+
         comprobarSesion()
         VerFragmentInicio()
 
@@ -57,7 +58,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
 
     }
 

@@ -91,7 +91,7 @@ class Registro_email : AppCompatActivity() {
     private fun llenarInfoBD() {
         progressDialog.setMessage("Guardando informacion")
 
-        val tiempo = Constantes.obtemerTiempoDis()
+        val tiempo = Constantes.obtenerTiempoDis()
         val emailUsuario = firebaseAuth.currentUser!!.email
         val uidUsuario = firebaseAuth.uid
 
