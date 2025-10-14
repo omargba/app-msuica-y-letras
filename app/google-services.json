@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "663720319904",
+    "firebase_url": "https://app-musica-y-letras-default-rtdb.firebaseio.com",
     "project_id": "app-musica-y-letras",
     "storage_bucket": "app-musica-y-letras.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.appmusicayletras"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "663720319904-uhloq4jnfkj6tkf5oubq787v6kfonl8u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.appmusicayletras",
+            "certificate_hash": "98619e75fa74610ae432c60981468b175f09c68c"
+          }
+        },
+        {
+          "client_id": "663720319904-234t9lgdjc4j03n4a0kbj99qsb31qbko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyApsGtIp-jVr96hsr35nKbknSiQK6cj_FQ"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663720319904-234t9lgdjc4j03n4a0kbj99qsb31qbko.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

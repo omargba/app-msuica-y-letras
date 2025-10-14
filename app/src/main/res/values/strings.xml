@@ -11,7 +11,7 @@
     <string name="Ingresar_email">Ingresar con email</string>
     <string name="Ingresar_google">Ingresar con google</string>
 
-    <string name="Txt_login">Login de usuario</string>
+    <string name="Txt_login">LOGIN</string>
     <string name="Et_email">Email</string>
     <string name="Et_password">Password</string>
     <string name="Btn_ingresar">Ingresar</string>
@@ -22,8 +22,27 @@
     <string name="Et_r_password">Repetir contraseña</string>
     <string name="Btn_registrar">Registrar</string>
 
+    <string name="Btn_cerrar_sesion">Cerrar sesión</string>
 
+    <string name="default_web_client_id">http://663720319904-234t9lgdjc4j03n4a0kbj99qsb31qbko.apps.googleusercontent.com/</string>
 
+    <string name="Txt_perfil">Perfil de Usuario</string>
+    <string name="Txt_informacion">Informacion:</string>
+    <string name="Txt_nombres">Nombre:</string>
+    <string name="Tv_nombres">Nombres Completos</string>
+    <string name="Txt_email">Email:</string>
+    <string name="Tv_email">email@dominio.com</string>'
+    <string name="Txt_fecha_nac">Fecha de Nacimiento:</string>
+    <string name="Tv_fecha_nac">DD/MM/AAAA</string>
+    <string name="Txt_miembro">Miembro desde:</string>
+    <string name="Tv_miembro">DD/MM/AAAA</string>
+    <string name="Txt_telefono">Telefono:</string>
+    <string name="Tv_telefono">XXX-XXX-XXXX</string>
+    <string name="Txt_estado_cuenta">Estado de Cuenta:</string>
+    <string name="Tv_estado_cuenta">No verificado</string>
+
+    <string name="TxtOpciones">Opciones</string>
+    <string name="Btn_editar_perfil">Editar perfil</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
