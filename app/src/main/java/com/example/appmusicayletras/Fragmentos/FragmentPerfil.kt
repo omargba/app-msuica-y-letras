@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.appmusicayletras.Constantes
+import com.example.appmusicayletras.EditarPerfil
 import com.example.appmusicayletras.OpcionesLogin
 import com.example.appmusicayletras.R
 import com.example.appmusicayletras.databinding.FragmentPerfilBinding
@@ -46,6 +47,10 @@ class FragmentPerfil : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         leerInfo()
+
+        binding.BtnEditarPerfil.setOnClickListener {
+            startActivity(Intent(mContext, EditarPerfil::class.java))
+        }
 
         binding.BtnCerrarSesion.setOnClickListener {
             firebaseAuth.signOut()
