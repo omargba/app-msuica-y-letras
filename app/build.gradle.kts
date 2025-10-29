@@ -89,6 +89,8 @@ dependencies {
     implementation(libs.loginGoogle)
     implementation(libs.glide)
     implementation(libs.ccp)
+    implementation(libs.playServicesLocation)
+    implementation(libs.playServicesMaps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

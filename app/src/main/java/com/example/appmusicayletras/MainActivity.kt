@@ -12,7 +12,10 @@ import com.example.appmusicayletras.Fragmentos.FragmentInicio
 import com.example.appmusicayletras.Fragmentos.FragmentMiMusica
 import com.example.appmusicayletras.Fragmentos.FragmentPerfil
 import com.example.appmusicayletras.databinding.ActivityMainBinding
+import com.example.appmusicayletras.Fragmentos.FragmentEventosMapa
 import com.google.firebase.auth.FirebaseAuth
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,6 +54,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.Item_Mi_musica->{
                     VerFragmentMiMusica()
+                    true
+                }
+                R.id.Item_mapa -> {
+                    VerFragmentMapa()
                     true
                 }
                 else->{
@@ -98,6 +105,14 @@ class MainActivity : AppCompatActivity() {
         //fragmentTransition.commit()
 
     }
+
+    private fun VerFragmentMapa() {
+        binding.TituloRL.setText("Eventos Cercanos")
+        val fragment = FragmentEventosMapa()
+        val fragmentTransition = supportFragmentManager.beginTransaction()
+        fragmentTransition.replace(binding.FragmentL1.id, fragment, "FragmentEventosMapa").commit()
+    }
+
 
 
 }

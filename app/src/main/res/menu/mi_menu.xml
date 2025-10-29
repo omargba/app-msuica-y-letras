@@ -15,5 +15,9 @@
     <item android:id="@+id/Item_perfil"
         android:title="@string/Item_perfil"
         android:icon="@drawable/ic_perfil"/>
+    <item
+        android:id="@+id/Item_mapa"
+        android:icon="@drawable/ic_mapa"
+        android:title="Mapa" />
 
 </menu>

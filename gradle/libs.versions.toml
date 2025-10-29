@@ -15,6 +15,7 @@ firebaseDatabaseV = "22.0.0"
 loginGoogleV = "21.4.0"
 glideV="5.0.5"
 ccpV="2.7.0"
+playServicesLocationV = "21.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +31,10 @@ firebaseDatabase = { group = "com.google.firebase", name = "firebase-database", 
 loginGoogle = {group = "com.google.android.gms", name = "play-services-auth", version.ref = "loginGoogleV" }
 glide = {group= "com.github.bumptech.glide", name = "glide", version.ref = "glideV"}
 ccp = {group= "com.hbb20", name = "ccp", version.ref = "ccpV"}
+playServicesLocation = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocationV" }
+playServicesMaps = { module = "com.google.android.gms:play-services-maps", version = "19.0.0" }
+
+
 
 
 [plugins]
