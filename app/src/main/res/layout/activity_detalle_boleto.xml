@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#FAFAFA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/tvTituloBoleto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detalle del Boleto"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/tvEventoBoleto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:id="@+id/tvFechaBoleto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:id="@+id/tvPagoBoleto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginBottom="20dp" />
+
+        <ImageView
+            android:id="@+id/ivQRBoleto"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:contentDescription="QR del boleto" />
+    </LinearLayout>
+</ScrollView>

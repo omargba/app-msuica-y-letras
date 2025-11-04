@@ -16,6 +16,8 @@ loginGoogleV = "21.4.0"
 glideV="5.0.5"
 ccpV="2.7.0"
 playServicesLocationV = "21.3.0"
+zxingCore = "3.5.0"
+zxingEmbedded = "4.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,7 +35,8 @@ glide = {group= "com.github.bumptech.glide", name = "glide", version.ref = "glid
 ccp = {group= "com.hbb20", name = "ccp", version.ref = "ccpV"}
 playServicesLocation = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocationV" }
 playServicesMaps = { module = "com.google.android.gms:play-services-maps", version = "19.0.0" }
-
+zxing-core = { module = "com.google.zxing:core", version.ref = "zxingCore" }
+zxing-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingEmbedded" }
 
 
 

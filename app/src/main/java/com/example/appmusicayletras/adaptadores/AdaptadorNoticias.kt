@@ -1,6 +1,7 @@
 package com.example.appmusicayletras.adaptadores
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.appmusicayletras.DetalleNoticiaActivity
 import com.example.appmusicayletras.R
 
 import com.example.appmusicayletras.modelos.Noticia
@@ -27,12 +29,19 @@ class AdaptadorNoticias(
 
         holder.titulo.text = noticia.titulo
         holder.descripcion.text = noticia.descripcion
+        Glide.with(context).load(noticia.imagenUrl).into(holder.imagen)
 
-        // Usar Glide para cargar la imagen
-        Glide.with(context)
-            .load(noticia.imagenUrl)
-           // .placeholder(R.drawable.cargaaa) // Opcional: una imagen de carga
-            .into(holder.imagen)
+        // Evento al hacer clic
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, DetalleNoticiaActivity::class.java)
+            intent.putExtra("titulo", noticia.titulo)
+            intent.putExtra("descripcion", noticia.descripcion)
+            intent.putExtra("fecha", noticia.fecha)
+            intent.putExtra("imagenUrl", noticia.imagenUrl)
+            intent.putExtra("latitud", noticia.latitud)
+            intent.putExtra("longitud", noticia.longitud)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

@@ -1,0 +1,52 @@
+package com.example.appmusicayletras
+
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.appmusicayletras.databinding.ActivityDetalleBoletoBinding
+import com.google.firebase.database.FirebaseDatabase
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.qrcode.QRCodeWriter
+
+class DetalleBoletoActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityDetalleBoletoBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityDetalleBoletoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val boletoId = intent.getStringExtra("boletoId") ?: return
+
+        // Leer el boleto desde Firebase
+        FirebaseDatabase.getInstance().getReference("Boletos")
+            .child(boletoId)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                if (snapshot.exists()) {
+                    val evento = snapshot.child("evento").value.toString()
+                    val fecha = snapshot.child("fechaEvento").value.toString()
+                    val marca = snapshot.child("marcaTarjeta").value.toString()
+                    val ultimos4 = snapshot.child("ultimos4").value.toString()
+                    val codigoQR = snapshot.child("codigoQR").value.toString()
+
+                    binding.tvEventoBoleto.text = evento
+                    binding.tvFechaBoleto.text = "Fecha: $fecha"
+                    binding.tvPagoBoleto.text = "Pago con: $marca ••••$ultimos4"
+
+                    // Generar QR desde el código guardado
+                    val qrWriter = QRCodeWriter()
+                    val bitMatrix = qrWriter.encode(codigoQR, BarcodeFormat.QR_CODE, 500, 500)
+                    val bmp = Bitmap.createBitmap(500, 500, Bitmap.Config.RGB_565)
+                    for (x in 0 until 500) {
+                        for (y in 0 until 500) {
+                            bmp.setPixel(x, y, if (bitMatrix[x, y]) Color.BLACK else Color.WHITE)
+                        }
+                    }
+                    binding.ivQRBoleto.setImageBitmap(bmp)
+                }
+            }
+    }
+}

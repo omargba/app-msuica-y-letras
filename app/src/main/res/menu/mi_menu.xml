@@ -6,7 +6,7 @@
 
     <item android:id="@+id/Item_Mi_musica"
         android:title="@string/Item_Mi_musica"
-        android:icon="@drawable/ic_mi_musica"/>
+        android:icon="@drawable/ic_mis_boletos"/>
 
     <item android:id="@+id/Item_buscar"
         android:title="@string/Item_buscar"

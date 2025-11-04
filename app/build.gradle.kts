@@ -91,6 +91,8 @@ dependencies {
     implementation(libs.ccp)
     implementation(libs.playServicesLocation)
     implementation(libs.playServicesMaps)
+    implementation(libs.zxing.core)
+    implementation(libs.zxing.embedded)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

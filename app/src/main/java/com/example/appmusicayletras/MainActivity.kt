@@ -13,6 +13,7 @@ import com.example.appmusicayletras.Fragmentos.FragmentMiMusica
 import com.example.appmusicayletras.Fragmentos.FragmentPerfil
 import com.example.appmusicayletras.databinding.ActivityMainBinding
 import com.example.appmusicayletras.Fragmentos.FragmentEventosMapa
+import com.example.appmusicayletras.Fragmentos.FragmentMisBoletos
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.Item_Mi_musica->{
-                    VerFragmentMiMusica()
+                    VerFragmentMisBoletos()
                     true
                 }
                 R.id.Item_mapa -> {
@@ -112,6 +113,14 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransition = supportFragmentManager.beginTransaction()
         fragmentTransition.replace(binding.FragmentL1.id, fragment, "FragmentEventosMapa").commit()
     }
+
+    private fun VerFragmentMisBoletos() {
+        binding.TituloRL.text = "Mis Boletos"
+        val fragment = FragmentMisBoletos()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(binding.FragmentL1.id, fragment, "FragmentMisBoletos").commit()
+    }
+
 
 
 

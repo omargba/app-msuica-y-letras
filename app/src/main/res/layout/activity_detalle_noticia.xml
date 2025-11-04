@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#FAFAFA"
+    tools:context=".DetalleNoticiaActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <!-- 🟣 Encabezado -->
+        <TextView
+            android:id="@+id/tv_titulo_pantalla"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detalles del Evento"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 🔹 Línea divisoria -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#BDBDBD"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 📰 Info del evento -->
+        <TextView
+            android:id="@+id/tv_titulo_detalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Título del evento"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#111111"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:id="@+id/tv_fecha_detalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha del evento"
+            android:textColor="#555555"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tv_descripcion_detalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripción del evento..."
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 📸 Imagen del evento -->
+        <ImageView
+            android:id="@+id/iv_detalle"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/borde_redondeado"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 🗺️ Mapa del evento -->
+        <fragment
+            android:id="@+id/mapDetalle"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- 🎟️ Botón de comprar boleto -->
+        <Button
+            android:id="@+id/btn_comprar_boleto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comprar boleto"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#8A2BE2"
+            android:padding="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:elevation="3dp" />
+
+    </LinearLayout>
+</ScrollView>
