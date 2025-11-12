@@ -161,11 +161,12 @@ class EditarPerfil : AppCompatActivity() {
             })
     }
 
-    private fun subirImagenStorage(){
+    private fun subirImagenStorage() {
         progressDialog.setMessage("Subiendo imagen")
         progressDialog.show()
 
-        val rutaImagen = "imagenesPerfil/" + firebaseAuth.uid
+        val uid = firebaseAuth.uid ?: return
+        val rutaImagen = "imagenesPerfil/$uid/perfil.jpg"
         val storageReference = FirebaseStorage.getInstance().getReference(rutaImagen)
 
         storageReference.putFile(imageUri!!)
@@ -181,11 +182,12 @@ class EditarPerfil : AppCompatActivity() {
                 progressDialog.dismiss()
                 Toast.makeText(
                     this,
-                    "No se pudo subir la imagen debido a ${e.message}",
+                    "No se pudo subir la imagen: ${e.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }
     }
+
 
     private fun actualizarImagenBD(urlImagenCargada: String) {
         progressDialog.setMessage("Actualizando imagen")
