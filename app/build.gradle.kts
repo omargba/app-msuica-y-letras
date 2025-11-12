@@ -93,6 +93,7 @@ dependencies {
     implementation(libs.playServicesMaps)
     implementation(libs.zxing.core)
     implementation(libs.zxing.embedded)
+    implementation(libs.firebaseStorage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

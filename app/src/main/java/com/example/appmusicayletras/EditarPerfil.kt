@@ -1,5 +1,6 @@
 package com.example.appmusicayletras
 
+
 import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Intent
@@ -16,12 +17,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.example.appmusicayletras.R
 import com.example.appmusicayletras.databinding.ActivityEditarPerfilBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 
 class EditarPerfil : AppCompatActivity() {
 
@@ -30,6 +33,63 @@ class EditarPerfil : AppCompatActivity() {
     private lateinit var progressDialog: ProgressDialog
 
     private var imageUri: Uri? = null
+
+    private var nombres = ""
+    private var f_nac = ""
+    private var codigo = ""
+    private var telefono = ""
+
+    private fun validarInfo(){
+        nombres = binding.EtNombres.text.toString().trim()
+        f_nac = binding.EtFNac.text.toString().trim()
+        codigo = binding.selectorCod.selectedCountryCodeWithPlus
+        telefono = binding.EtTelefono.text.toString().trim()
+
+        if (nombres.isEmpty()){
+            Toast.makeText(this, "Ingrese sus nombres", Toast.LENGTH_SHORT).show()
+
+        } else if (f_nac.isEmpty()){
+            Toast.makeText(this, "Ingrese su fecha de nacimiento", Toast.LENGTH_SHORT).show()
+
+
+        }else if(codigo.isEmpty()){
+            Toast.makeText(this, "Seleccione un codigo", Toast.LENGTH_SHORT).show()
+
+
+        }else if (telefono.isEmpty()){
+            Toast.makeText(this, "Ingrese su numero de telefono", Toast.LENGTH_SHORT).show()
+
+        }
+        else{
+            actualizarInfo()
+        }
+
+
+    }
+
+    private fun actualizarInfo() {
+        progressDialog.setMessage("Actualizando informacion")
+        progressDialog.show()
+        val hashMap = HashMap<String, Any>()
+        hashMap["nombres"] = "${nombres}"
+        hashMap["fecha_nac"] = "${f_nac}"
+        hashMap["codigoTelefono"] = "${codigo}"
+        hashMap["telefono"] = "${telefono}"
+
+        val ref = FirebaseDatabase.getInstance().getReference("Usuarios")
+        ref.child("${firebaseAuth.uid}")
+            .updateChildren(hashMap)
+            .addOnSuccessListener {
+                progressDialog.dismiss()
+                Toast.makeText(this, "Informacion actualizada", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                progressDialog.dismiss()
+                Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +103,10 @@ class EditarPerfil : AppCompatActivity() {
         progressDialog.setCanceledOnTouchOutside(false)
 
         cargarInfo()
+
+        binding.BtnActualizar.setOnClickListener {
+            validarInfo()
+        }
 
         binding.FABCambiarImg.setOnClickListener {
             selec_imagen_de()
@@ -82,9 +146,9 @@ class EditarPerfil : AppCompatActivity() {
                         val codigo = codTelefono.replace("+", "").toInt()
                         binding.selectorCod.setCountryForPhoneCode(codigo)
                     } catch (e: Exception) {
-                        Toast.makeText(this@EditarPerfil,
-                            "${e.message}"
-                            , Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@EditarPerfil,
+//                            "${e.message}"
+//                            , Toast.LENGTH_SHORT).show()
                     }
 
                 }
@@ -96,6 +160,56 @@ class EditarPerfil : AppCompatActivity() {
 
             })
     }
+
+    private fun subirImagenStorage(){
+        progressDialog.setMessage("Subiendo imagen")
+        progressDialog.show()
+
+        val rutaImagen = "imagenesPerfil/" + firebaseAuth.uid
+        val storageReference = FirebaseStorage.getInstance().getReference(rutaImagen)
+
+        storageReference.putFile(imageUri!!)
+            .addOnSuccessListener { taskSnapshot ->
+                val uriTask = taskSnapshot.storage.downloadUrl
+                while (!uriTask.isSuccessful);
+                val urlImagenCargada = "${uriTask.result}"
+                if (uriTask.isSuccessful) {
+                    actualizarImagenBD(urlImagenCargada)
+                }
+            }
+            .addOnFailureListener { e ->
+                progressDialog.dismiss()
+                Toast.makeText(
+                    this,
+                    "No se pudo subir la imagen debido a ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
+    private fun actualizarImagenBD(urlImagenCargada: String) {
+        progressDialog.setMessage("Actualizando imagen")
+        progressDialog.show()
+
+        val hashMap: HashMap<String, Any> = HashMap()
+        if( imageUri != null) {
+            hashMap["urlImagenPerfil"] = urlImagenCargada
+        }
+
+        val ref = FirebaseDatabase.getInstance().getReference("Usuarios")
+        ref.child("${firebaseAuth.uid}")
+            .updateChildren(hashMap)
+            .addOnSuccessListener {
+                progressDialog.dismiss()
+                Toast.makeText(this, "Imagen actualizada", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                progressDialog.dismiss()
+                Toast.makeText(this, "No se pudo actualizar la imagen debido a ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
 
     private fun selec_imagen_de(){
         val popupMenu = PopupMenu(this, binding.FABCambiarImg)
@@ -168,13 +282,14 @@ class EditarPerfil : AppCompatActivity() {
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()) { resultado ->
             if (resultado.resultCode == RESULT_OK) {
-                try{
-                    Glide.with(this)
-                        .load(imageUri)
-                        .placeholder(R.drawable.img_perfil)
-                        .into(binding.imgPerfil)
-                }catch (e:Exception){
-                }
+                subirImagenStorage()
+//                try{
+//                    Glide.with(this)
+//                        .load(imageUri)
+//                        .placeholder(R.drawable.img_perfil)
+//                        .into(binding.imgPerfil)
+//                }catch (e:Exception){
+//                }
             } else{
                 Toast.makeText(
                     this,
@@ -189,14 +304,15 @@ class EditarPerfil : AppCompatActivity() {
             if (resultado.resultCode == RESULT_OK) {
                 val data = resultado.data
                 imageUri = data!!.data
+                subirImagenStorage()
 
-                try{
-                    Glide.with(this)
-                        .load(imageUri)
-                        .placeholder(R.drawable.img_perfil)
-                        .into(binding.imgPerfil)
-                }catch (e: Exception){
-                }
+//                try{
+//                    Glide.with(this)
+//                        .load(imageUri)
+//                        .placeholder(R.drawable.img_perfil)
+//                        .into(binding.imgPerfil)
+//                }catch (e: Exception){
+//                }
             }
             else{
                 Toast.makeText(
@@ -224,5 +340,7 @@ class EditarPerfil : AppCompatActivity() {
         resultadoGaleria_ARL.launch(intent)
 
     }
+
+
 
 }

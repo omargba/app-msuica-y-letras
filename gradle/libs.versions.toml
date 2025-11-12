@@ -18,6 +18,7 @@ ccpV="2.7.0"
 playServicesLocationV = "21.3.0"
 zxingCore = "3.5.0"
 zxingEmbedded = "4.3.0"
+firebaseStorageV = "22.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,7 +38,7 @@ playServicesLocation = { module = "com.google.android.gms:play-services-location
 playServicesMaps = { module = "com.google.android.gms:play-services-maps", version = "19.0.0" }
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxingCore" }
 zxing-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingEmbedded" }
-
+firebaseStorage = {group= "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorageV"}
 
 
 [plugins]
