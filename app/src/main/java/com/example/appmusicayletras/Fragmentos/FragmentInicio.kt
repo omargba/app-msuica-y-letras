@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,49 +18,127 @@ class FragmentInicio : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var noticiasList: ArrayList<Noticia>
+    private lateinit var noticiasFiltradas: ArrayList<Noticia>
     private lateinit var adaptadorNoticias: AdaptadorNoticias
     private lateinit var dbRef: DatabaseReference
+
+    private lateinit var filtroCiudad: AutoCompleteTextView
+    private lateinit var filtroCategoria: AutoCompleteTextView
+
+    private var ciudades = ArrayList<String>()
+    private var categorias = ArrayList<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_inicio, container, false)
 
         recyclerView = view.findViewById(R.id.recycler_noticia)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
 
-        noticiasList = arrayListOf<Noticia>()
-        adaptadorNoticias = AdaptadorNoticias(requireContext(), noticiasList)
+        filtroCiudad = view.findViewById(R.id.FiltroCiudad)
+        filtroCategoria = view.findViewById(R.id.FiltroCategoria)
+
+        noticiasList = arrayListOf()
+        noticiasFiltradas = arrayListOf()
+
+        adaptadorNoticias = AdaptadorNoticias(requireContext(), noticiasFiltradas)
         recyclerView.adapter = adaptadorNoticias
 
         obtenerDatosNoticias()
+        configurarFiltros()
 
         return view
     }
 
     private fun obtenerDatosNoticias() {
-        // Apuntamos al nodo "Noticias" en Firebase
         dbRef = FirebaseDatabase.getInstance().getReference("Noticias")
 
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                // Limpiamos la lista antes de agregar los nuevos datos
                 noticiasList.clear()
-                if (snapshot.exists()){
-                    for (noticiaSnap in snapshot.children){
-                        val noticiaData = noticiaSnap.getValue(Noticia::class.java)
-                        noticiasList.add(noticiaData!!)
+                ciudades.clear()
+                categorias.clear()
+
+                if (snapshot.exists()) {
+                    for (noticiaSnap in snapshot.children) {
+
+                        val noticia = noticiaSnap.getValue(Noticia::class.java)
+
+                        noticia?.let {
+                            noticiasList.add(it)
+
+                            // Agregar ciudades y categorías únicas
+                            if (it.ciudad.isNotEmpty() && !ciudades.contains(it.ciudad)) {
+                                ciudades.add(it.ciudad)
+                            }
+                            if (it.categoria.isNotEmpty() && !categorias.contains(it.categoria)) {
+                                categorias.add(it.categoria)
+                            }
+                        }
                     }
-                    // Notificamos al adaptador que los datos han cambiado
-                    adaptadorNoticias.notifyDataSetChanged()
+
+                    // Actualizar adaptadores de filtros
+                    actualizarOpcionesFiltros()
+
+                    aplicarFiltros()
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                // Manejar el error si la lectura es cancelada
-            }
+            override fun onCancelled(error: DatabaseError) {}
         })
+    }
+
+
+    private fun configurarFiltros() {
+
+        filtroCiudad.setOnItemClickListener { _, _, _, _ ->
+            aplicarFiltros()
+        }
+
+        filtroCategoria.setOnItemClickListener { _, _, _, _ ->
+            aplicarFiltros()
+        }
+    }
+
+
+    private fun actualizarOpcionesFiltros() {
+        // Ordenar alfabeticamente
+        ciudades.sort()
+        categorias.sort()
+
+        val adapterCiudad =
+            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, ciudades)
+        val adapterCategoria = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, categorias)
+
+        filtroCiudad.setAdapter(adapterCiudad)
+        filtroCategoria.setAdapter(adapterCategoria)
+    }
+
+
+    /** FILTRAR RESULTADOS **/
+    private fun aplicarFiltros() {
+        val ciudadSeleccionada = filtroCiudad.text.toString()
+        val categoriaSeleccionada = filtroCategoria.text.toString()
+
+        noticiasFiltradas.clear()
+
+        for (evento in noticiasList) {
+
+            val coincideCiudad =
+                ciudadSeleccionada.isEmpty() || evento.ciudad == ciudadSeleccionada
+
+            val coincideCategoria =
+                categoriaSeleccionada.isEmpty() || evento.categoria == categoriaSeleccionada
+
+            if (coincideCiudad && coincideCategoria) {
+                noticiasFiltradas.add(evento)
+            }
+        }
+
+        adaptadorNoticias.notifyDataSetChanged()
     }
 }

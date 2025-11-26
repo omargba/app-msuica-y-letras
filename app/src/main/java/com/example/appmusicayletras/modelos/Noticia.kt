@@ -5,6 +5,9 @@ data class Noticia(
     var descripcion: String = "",
     var fecha: String = "",
     var imagenUrl: String = "",
+    var ciudad: String = "",
+    var categoria: String = "",
     var latitud: Double = 0.0,
     var longitud: Double = 0.0
 )
+

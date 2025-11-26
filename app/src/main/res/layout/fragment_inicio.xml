@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".Fragmentos.FragmentInicio">
 
+    <!-- TÍTULO -->
     <TextView
         android:id="@+id/Tv_titulo_novedades"
         android:layout_width="wrap_content"
@@ -12,12 +13,56 @@
         android:text="Novedades Musicales"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:layout_alignParentTop="true"
+        />
 
+    <!-- FILTRO DE CIUDAD -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/TIL_FiltroCiudad"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Tv_titulo_novedades"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/FiltroCiudad"
+            android:hint="Ciudad"
+            android:inputType="none"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- FILTRO DE CATEGORÍA -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/TIL_FiltroCategoria"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/TIL_FiltroCiudad"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="12dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/FiltroCategoria"
+            android:hint="Categoría"
+            android:inputType="none"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- LISTA DE EVENTOS -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_noticia"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/Tv_titulo_novedades"
+        android:layout_below="@id/TIL_FiltroCategoria"
+        android:paddingTop="4dp"
         tools:listitem="@layout/item_noticias" />
+
 </RelativeLayout>

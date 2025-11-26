@@ -15,7 +15,7 @@ import com.example.appmusicayletras.databinding.ActivityMainBinding
 import com.example.appmusicayletras.Fragmentos.FragmentEventosMapa
 import com.example.appmusicayletras.Fragmentos.FragmentMisBoletos
 import com.google.firebase.auth.FirebaseAuth
-
+import com.google.firebase.storage.FirebaseStorage
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var firebaseAuth: FirebaseAuth
-
+    private lateinit var firebaseStorage: FirebaseStorage
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
