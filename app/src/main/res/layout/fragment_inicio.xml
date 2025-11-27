@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragmentos.FragmentInicio">
 
-    <!-- TÍTULO -->
+    <!-- TITULO -->
     <TextView
         android:id="@+id/Tv_titulo_novedades"
         android:layout_width="wrap_content"
@@ -13,11 +13,10 @@
         android:text="Novedades Musicales"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_margin="16dp"
-        android:layout_alignParentTop="true"
-        />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
 
-    <!-- FILTRO DE CIUDAD -->
+    <!-- FILTRO CIUDAD -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TIL_FiltroCiudad"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -26,7 +25,7 @@
         android:layout_below="@id/Tv_titulo_novedades"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="4dp">
+        android:layout_marginTop="12dp">
 
         <AutoCompleteTextView
             android:id="@+id/FiltroCiudad"
@@ -36,7 +35,7 @@
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- FILTRO DE CATEGORÍA -->
+    <!-- FILTRO CATEGORIA -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TIL_FiltroCategoria"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -45,8 +44,7 @@
         android:layout_below="@id/TIL_FiltroCiudad"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="12dp">
+        android:layout_marginTop="12dp">
 
         <AutoCompleteTextView
             android:id="@+id/FiltroCategoria"
@@ -56,13 +54,28 @@
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- BOTÓN LIMPIAR FILTROS -->
+    <Button
+        android:id="@+id/BtnLimpiarFiltros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Limpiar filtros"
+        android:layout_below="@id/TIL_FiltroCategoria"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/blue_dark"
+        android:textColor="@android:color/white"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
+
     <!-- LISTA DE EVENTOS -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_noticia"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/TIL_FiltroCategoria"
-        android:paddingTop="4dp"
+        android:layout_below="@id/BtnLimpiarFiltros"
+        android:layout_marginTop="12dp"
+        android:padding="8dp"
         tools:listitem="@layout/item_noticias" />
 
 </RelativeLayout>

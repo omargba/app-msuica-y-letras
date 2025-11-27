@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,7 @@ class FragmentInicio : Fragment() {
 
     private lateinit var filtroCiudad: AutoCompleteTextView
     private lateinit var filtroCategoria: AutoCompleteTextView
+    private lateinit var btnLimpiarFiltros: Button
 
     private var ciudades = ArrayList<String>()
     private var categorias = ArrayList<String>()
@@ -41,6 +43,7 @@ class FragmentInicio : Fragment() {
 
         filtroCiudad = view.findViewById(R.id.FiltroCiudad)
         filtroCategoria = view.findViewById(R.id.FiltroCategoria)
+        btnLimpiarFiltros = view.findViewById(R.id.BtnLimpiarFiltros)   // 👈 AQUÍ
 
         noticiasList = arrayListOf()
         noticiasFiltradas = arrayListOf()
@@ -51,8 +54,14 @@ class FragmentInicio : Fragment() {
         obtenerDatosNoticias()
         configurarFiltros()
 
+        // Click del botón limpiar
+        btnLimpiarFiltros.setOnClickListener {
+            limpiarFiltros()
+        }
+
         return view
     }
+
 
     private fun obtenerDatosNoticias() {
         dbRef = FirebaseDatabase.getInstance().getReference("Noticias")
@@ -141,4 +150,15 @@ class FragmentInicio : Fragment() {
 
         adaptadorNoticias.notifyDataSetChanged()
     }
+
+    private fun limpiarFiltros() {
+        // Limpia los AutoCompleteTextView
+        filtroCiudad.setText("")
+        filtroCategoria.setText("")
+
+        // Aplica filtros de nuevo (esto deja la lista completa)
+        aplicarFiltros()
+    }
+
+
 }
