@@ -1,8 +1,11 @@
 package com.example.appmusicayletras
 
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.appmusicayletras.databinding.ActivityDetalleBoletoBinding
@@ -23,6 +26,11 @@ class DetalleBoletoActivity : AppCompatActivity() {
 
         binding.root.alpha = 0f
         binding.root.animate().alpha(1f).setDuration(300).start()
+
+        binding.btnDescargarPDF.setOnClickListener {
+            generarPDF()
+        }
+
 
         // Cargar boleto
         FirebaseDatabase.getInstance().getReference("Boletos")
@@ -79,5 +87,57 @@ class DetalleBoletoActivity : AppCompatActivity() {
 
         binding.ivQRBoleto.setImageBitmap(bmp)
     }
+
+    private fun generarPDF() {
+        try {
+            val nombreArchivo = "Boleto_${binding.tvEventoBoleto.text}.pdf"
+
+            // 📂 Guardar en DESCARGAS visible para el usuario
+            val carpetaDescargas = android.os.Environment.getExternalStoragePublicDirectory(
+                android.os.Environment.DIRECTORY_DOWNLOADS
+            )
+
+            val archivo = java.io.File(carpetaDescargas, nombreArchivo)
+            val outputStream = java.io.FileOutputStream(archivo)
+
+            val document = android.graphics.pdf.PdfDocument()
+
+            // Convertir layout a imagen
+            binding.root.measure(
+                View.MeasureSpec.makeMeasureSpec(binding.root.width, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+            )
+            binding.root.layout(0, 0, binding.root.measuredWidth, binding.root.measuredHeight)
+
+            val bitmap = Bitmap.createBitmap(
+                binding.root.measuredWidth,
+                binding.root.measuredHeight,
+                Bitmap.Config.ARGB_8888
+            )
+
+            val canvas = Canvas(bitmap)
+            binding.root.draw(canvas)
+
+            val pageInfo = android.graphics.pdf.PdfDocument.PageInfo.Builder(
+                bitmap.width,
+                bitmap.height,
+                1
+            ).create()
+
+            val page = document.startPage(pageInfo)
+            page.canvas.drawBitmap(bitmap, 0f, 0f, null)
+            document.finishPage(page)
+
+            document.writeTo(outputStream)
+            document.close()
+
+            Toast.makeText(this, "PDF guardado en Descargas ✔", Toast.LENGTH_LONG).show()
+
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error al generar PDF: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+    }
+
+
 }
 
