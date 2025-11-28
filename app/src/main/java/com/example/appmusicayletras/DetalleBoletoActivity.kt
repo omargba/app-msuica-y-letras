@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.appmusicayletras.databinding.ActivityDetalleBoletoBinding
 import com.google.firebase.database.FirebaseDatabase
 import com.google.zxing.BarcodeFormat
@@ -20,12 +21,16 @@ class DetalleBoletoActivity : AppCompatActivity() {
 
         val boletoId = intent.getStringExtra("boletoId") ?: return
 
-        // Leer el boleto desde Firebase
+        binding.root.alpha = 0f
+        binding.root.animate().alpha(1f).setDuration(300).start()
+
+        // Cargar boleto
         FirebaseDatabase.getInstance().getReference("Boletos")
             .child(boletoId)
             .get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot.exists()) {
+
                     val evento = snapshot.child("evento").value.toString()
                     val fecha = snapshot.child("fechaEvento").value.toString()
                     val marca = snapshot.child("marcaTarjeta").value.toString()
@@ -36,17 +41,43 @@ class DetalleBoletoActivity : AppCompatActivity() {
                     binding.tvFechaBoleto.text = "Fecha: $fecha"
                     binding.tvPagoBoleto.text = "Pago con: $marca ••••$ultimos4"
 
-                    // Generar QR desde el código guardado
-                    val qrWriter = QRCodeWriter()
-                    val bitMatrix = qrWriter.encode(codigoQR, BarcodeFormat.QR_CODE, 500, 500)
-                    val bmp = Bitmap.createBitmap(500, 500, Bitmap.Config.RGB_565)
-                    for (x in 0 until 500) {
-                        for (y in 0 until 500) {
-                            bmp.setPixel(x, y, if (bitMatrix[x, y]) Color.BLACK else Color.WHITE)
-                        }
-                    }
-                    binding.ivQRBoleto.setImageBitmap(bmp)
+                    // 🔥 NUEVO: cargar imagen desde el nodo Noticias
+                    cargarImagenDesdeNoticias(evento)
+
+                    generarQR(codigoQR)
                 }
             }
     }
+
+    private fun cargarImagenDesdeNoticias(nombreEvento: String) {
+        val ref = FirebaseDatabase.getInstance().getReference("Noticias")
+
+        ref.get().addOnSuccessListener { snapshot ->
+            for (n in snapshot.children) {
+                val titulo = n.child("titulo").value.toString()
+                if (titulo == nombreEvento) {
+                    val imagenUrl = n.child("imagenUrl").value.toString()
+
+                    Glide.with(this)
+                        .load(imagenUrl)
+                        .into(binding.ivImagenEvento)
+                }
+            }
+        }
+    }
+
+    private fun generarQR(text: String) {
+        val qrWriter = QRCodeWriter()
+        val bitMatrix = qrWriter.encode(text, BarcodeFormat.QR_CODE, 500, 500)
+        val bmp = Bitmap.createBitmap(500, 500, Bitmap.Config.RGB_565)
+
+        for (x in 0 until 500) {
+            for (y in 0 until 500) {
+                bmp.setPixel(x, y, if (bitMatrix[x, y]) Color.BLACK else Color.WHITE)
+            }
+        }
+
+        binding.ivQRBoleto.setImageBitmap(bmp)
+    }
 }
+

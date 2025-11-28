@@ -147,6 +147,7 @@ class FormularioCompraActivity : AppCompatActivity() {
         val fechaExp = binding.etFechaExp.text.toString()
         val marca = detectCardBrand(tarjeta.replace(" ", ""))
 
+
         if (nombre.isEmpty() || correo.isEmpty() || direccion.isEmpty() || tarjeta.isEmpty()) {
             Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
             return
@@ -163,8 +164,10 @@ class FormularioCompraActivity : AppCompatActivity() {
             "fechaExp" to fechaExp,
             "evento" to intent.getStringExtra("tituloEvento"),
             "fechaEvento" to intent.getStringExtra("fechaEvento"),
-            "codigoQR" to idBoleto
+            "codigoQR" to idBoleto,
+            "imagenUrl" to intent.getStringExtra("imagenUrlEvento")
         )
+
 
         dbRef.child(idBoleto).setValue(datosBoleto)
             .addOnSuccessListener { mostrarDialogoQR(idBoleto) }

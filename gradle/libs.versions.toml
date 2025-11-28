@@ -20,6 +20,7 @@ zxingCore = "3.5.0"
 zxingEmbedded = "4.3.0"
 firebaseStorageV = "22.0.1"
 
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -39,6 +40,7 @@ playServicesMaps = { module = "com.google.android.gms:play-services-maps", versi
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxingCore" }
 zxing-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingEmbedded" }
 firebaseStorage = {group= "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorageV"}
+
 
 
 [plugins]

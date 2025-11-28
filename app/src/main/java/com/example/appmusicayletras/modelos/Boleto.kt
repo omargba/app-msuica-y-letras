@@ -9,5 +9,6 @@ data class Boleto(
     var marcaTarjeta: String = "",
     var ultimos4: String = "",
     var evento: String = "",
-    var fechaEvento: String = ""
+    var fechaEvento: String = "",
+    var imagenUrl: String = ""
 )

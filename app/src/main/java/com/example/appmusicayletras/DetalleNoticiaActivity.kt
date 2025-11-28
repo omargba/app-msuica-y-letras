@@ -27,22 +27,11 @@ class DetalleNoticiaActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityDetalleNoticiaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        titulo = intent.getStringExtra("titulo") ?: ""
-        fecha = intent.getStringExtra("fecha") ?: ""
-
-        binding.btnComprarBoleto.setOnClickListener {
-            val intent = Intent(this, FormularioCompraActivity::class.java)
-            intent.putExtra("tituloEvento", titulo)
-            intent.putExtra("fechaEvento", fecha)
-            startActivity(intent)
-        }
-
-
-        // Recibir datos
+        // Recibir datos primero
         titulo = intent.getStringExtra("titulo") ?: ""
         val descripcion = intent.getStringExtra("descripcion") ?: ""
-        val fecha = intent.getStringExtra("fecha") ?: ""
-        val imagen = intent.getStringExtra("imagenUrl") ?: ""
+        fecha = intent.getStringExtra("fecha") ?: ""
+        val imagen = intent.getStringExtra("imagenUrl") ?: ""   // ✅ AHORA SÍ EXISTE
         lat = intent.getDoubleExtra("latitud", 19.4326)
         lon = intent.getDoubleExtra("longitud", -99.1332)
 
@@ -52,10 +41,20 @@ class DetalleNoticiaActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.tvFechaDetalle.text = fecha
         Glide.with(this).load(imagen).into(binding.ivDetalle)
 
+        // BOTÓN PARA COMPRAR BOLETO (ya puede usar imagen)
+        binding.btnComprarBoleto.setOnClickListener {
+            val intent = Intent(this, FormularioCompraActivity::class.java)
+            intent.putExtra("tituloEvento", titulo)
+            intent.putExtra("fechaEvento", fecha)
+            intent.putExtra("imagenUrlEvento", imagen)   // <---- ESTE
+            startActivity(intent)
+        }
+
         // Configurar mapa
         val mapFragment = supportFragmentManager.findFragmentById(R.id.mapDetalle) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
